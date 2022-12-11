@@ -1,15 +1,20 @@
 package com.example.pratica1
 
+import android.Manifest
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import com.example.pratica1.databinding.FragmentFirstBinding
 import kotlin.math.abs
@@ -25,6 +30,10 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private var _location: LocationManager? = null
+
+    private val location get() = _location!!
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -38,49 +47,33 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var manager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        var light = manager.getDefaultSensor(Sensor.TYPE_LIGHT)
-        var temp = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        var activity = this.activity!!
 
-        manager.registerListener(
-            object : SensorEventListener {
-                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-                }
-
-                override fun onSensorChanged(event: SensorEvent?) {
-                    if (event != null && _binding != null) {
-                        var light = event.values[0]
-
-                        binding.textLight.text = "Light: $light lx"
-                    }
-                }
-            },
-            light,
-            SensorManager.SENSOR_DELAY_NORMAL
+        ActivityCompat.requestPermissions(
+            activity,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            42
         )
 
-        manager.registerListener(
-            object : SensorEventListener {
-                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-                }
+        this._location = activity.baseContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        location.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 6000, 10f
+        ) { p0 ->
+            setPos(p0)
+        }
 
-                override fun onSensorChanged(event: SensorEvent?) {
-                    if (event != null && _binding != null) {
-                        var x = event.values[0]
-                        var y = event.values[1]
-                        var z = event.values[2]
+        var l = location.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        if (l != null) {
+            setPos(l)
+        }
+    }
 
-                        binding.textTemp.text = "Gyro: <$x, $y, $z> radians"
-                    }
-                }
-            },
-            temp,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
+    private fun setPos(p: Location) {
+        binding.textLight.text = "Altitude: ${p.altitude}\nLatitude ${p.latitude}"
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _location = null
     }
 }
