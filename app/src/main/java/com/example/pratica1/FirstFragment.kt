@@ -40,6 +40,7 @@ class FirstFragment : Fragment() {
 
         var manager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         var light = manager.getDefaultSensor(Sensor.TYPE_LIGHT)
+        var temp = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
         manager.registerListener(
             object : SensorEventListener {
@@ -55,6 +56,25 @@ class FirstFragment : Fragment() {
                 }
             },
             light,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
+
+        manager.registerListener(
+            object : SensorEventListener {
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+                }
+
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event != null && _binding != null) {
+                        var x = event.values[0]
+                        var y = event.values[1]
+                        var z = event.values[2]
+
+                        binding.textTemp.text = "Gyro: <$x, $y, $z> radians"
+                    }
+                }
+            },
+            temp,
             SensorManager.SENSOR_DELAY_NORMAL
         )
     }
