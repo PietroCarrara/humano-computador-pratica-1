@@ -7,33 +7,13 @@
     tools:context=".FirstFragment">
 
     <TextView
-        android:id="@+id/text_x"
+        android:id="@+id/text_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/type_phrase"
-        app:layout_constraintBottom_toTopOf="@id/text_y"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_y"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/type_phrase"
-        app:layout_constraintBottom_toTopOf="@id/text_z"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_x" />
-
-    <TextView
-        android:id="@+id/text_z"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/type_phrase"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_y"  />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

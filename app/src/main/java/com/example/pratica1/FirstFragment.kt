@@ -17,7 +17,7 @@ import kotlin.math.abs
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment(), SensorEventListener {
+class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
@@ -39,28 +39,24 @@ class FirstFragment : Fragment(), SensorEventListener {
         super.onViewCreated(view, savedInstanceState)
 
         var manager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        var accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        var light = manager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
-        manager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
-    }
+        manager.registerListener(
+            object : SensorEventListener {
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+                }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-    }
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event != null && _binding != null) {
+                        var light = event.values[0]
 
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event != null && _binding != null) {
-            var x = event.values[0]
-            var y = event.values[1]
-            var z = event.values[2]
-
-            binding.textX.text = "X: $x"
-            binding.textY.text = "Y: $y"
-            binding.textZ.text = "Z: $z"
-
-            if (abs(x) + abs(z) < 0.3f) {
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            }
-        }
+                        binding.textLight.text = "Light: $light lx"
+                    }
+                }
+            },
+            light,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
     }
 
     override fun onDestroyView() {
