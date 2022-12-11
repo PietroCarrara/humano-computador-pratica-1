@@ -9,6 +9,7 @@
 
     <string name="add">Add them!</string>
     <string name="send_it">Send it!</string>
+    <string name="position_ok">Position: OK!</string>
     <string name="insert_num_a">Insert the first number</string>
     <string name="insert_num_b">Insert the second number</string>
     <string name="type_phrase">Type something</string>
