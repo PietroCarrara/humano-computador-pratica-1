@@ -10,39 +10,20 @@
         android:id="@+id/edittext_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/insert_num_b"
-        app:layout_constraintBottom_toTopOf="@id/edittext_b"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edittext_b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/insert_num_b"
+        android:hint="@string/type_phrase"
         app:layout_constraintBottom_toTopOf="@id/button_calc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_a" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_calc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"
-        app:layout_constraintBottom_toTopOf="@id/textview_result"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edittext_b" />
-
-    <TextView
-        android:id="@+id/textview_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="@string/send_it"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_calc"/>
+        app:layout_constraintTop_toBottomOf="@id/edittext_a" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
