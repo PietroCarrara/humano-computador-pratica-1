@@ -32,9 +32,16 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        binding.buttonCalc.setOnClickListener {
+            var a = binding.edittextA.text.toString().toFloatOrNull() ?: 0f
+            var b = binding.edittextB.text.toString().toFloatOrNull() ?: 0f
+            var res = a + b
+            binding.textviewResult.text = res.toString()
         }
+    }
+
+    private fun computeSum() {
+
     }
 
     override fun onDestroyView() {
